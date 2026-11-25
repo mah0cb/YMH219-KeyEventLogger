@@ -26,7 +26,7 @@ public class LogFileWriter
         }
         catch (Exception ex) when (ex is IOException or ArgumentException or NotSupportedException)
         {
-            hata = $"Dosya yazılamadı: {ex.Message}";
+            hata = "Dosya yazılamadı. Dosya başka bir programda açık olabilir, disk dolu olabilir ya da yol geçersizdir.";
         }
         return false;
     }
