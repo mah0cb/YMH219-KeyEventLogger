@@ -7,6 +7,7 @@ namespace KeyEventLogger.Forms;
 public partial class AnaForm : Form
 {
     private readonly KeyEventLoggerService _logger = new();
+    private readonly LogFileWriter _dosyaYazici = new();
 
     public AnaForm()
     {
@@ -81,6 +82,36 @@ public partial class AnaForm : Form
         lvKayitlar.Items.Clear();
         KayitSayisiniGoster();
         YazmaAlaninaOdaklan();
+    }
+
+    private void btnKaydet_Click(object? sender, EventArgs e)
+    {
+        IReadOnlyList<KeyEventRecord> kayitlar = _logger.Records;
+        if (kayitlar.Count == 0)
+        {
+            MessageBox.Show(this, "Kaydedilecek kayıt yok.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        else
+        {
+            sfdKaydet.FileName = $"klavye-kayitlari-{DateTime.Now:yyyyMMdd-HHmmss}.txt";
+            if (sfdKaydet.ShowDialog(this) == DialogResult.OK)
+            {
+                DosyayaKaydet(sfdKaydet.FileName, kayitlar);
+            }
+        }
+        YazmaAlaninaOdaklan();
+    }
+
+    private void DosyayaKaydet(string dosyaYolu, IReadOnlyList<KeyEventRecord> kayitlar)
+    {
+        if (_dosyaYazici.Yaz(dosyaYolu, kayitlar, out string hata))
+        {
+            lblDurumCubugu.Text = $"{kayitlar.Count} kayıt yazıldı: {dosyaYolu}";
+        }
+        else
+        {
+            MessageBox.Show(this, hata, "Kaydetme hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     private void OlaySecimi_Click(object? sender, EventArgs e) => YazmaAlaninaOdaklan();

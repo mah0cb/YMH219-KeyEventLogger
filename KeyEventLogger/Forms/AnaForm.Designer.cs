@@ -18,6 +18,7 @@ partial class AnaForm
         btnBaslat = new Button();
         btnDurdur = new Button();
         btnTemizle = new Button();
+        btnKaydet = new Button();
         lblDurumNokta = new Label();
         lblDurum = new Label();
         lblOlaylar = new Label();
@@ -34,6 +35,7 @@ partial class AnaForm
         clmDegistirici = new ColumnHeader();
         stsDurum = new StatusStrip();
         lblDurumCubugu = new ToolStripStatusLabel();
+        sfdKaydet = new SaveFileDialog();
         stsDurum.SuspendLayout();
         SuspendLayout();
         // 
@@ -66,6 +68,16 @@ partial class AnaForm
         btnTemizle.Text = "Temizle";
         btnTemizle.UseVisualStyleBackColor = true;
         btnTemizle.Click += btnTemizle_Click;
+        // 
+        // btnKaydet
+        // 
+        btnKaydet.Location = new Point(330, 12);
+        btnKaydet.Name = "btnKaydet";
+        btnKaydet.Size = new Size(130, 30);
+        btnKaydet.TabIndex = 3;
+        btnKaydet.Text = ".txt olarak kaydet";
+        btnKaydet.UseVisualStyleBackColor = true;
+        btnKaydet.Click += btnKaydet_Click;
         // 
         // lblDurumNokta
         // 
@@ -201,6 +213,12 @@ partial class AnaForm
         lblDurumCubugu.Name = "lblDurumCubugu";
         lblDurumCubugu.Text = "Hazır";
         // 
+        // sfdKaydet
+        // 
+        sfdKaydet.DefaultExt = "txt";
+        sfdKaydet.Filter = "Metin dosyası (*.txt)|*.txt";
+        sfdKaydet.Title = "Kayıtları kaydet";
+        // 
         // AnaForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -209,6 +227,7 @@ partial class AnaForm
         Controls.Add(btnBaslat);
         Controls.Add(btnDurdur);
         Controls.Add(btnTemizle);
+        Controls.Add(btnKaydet);
         Controls.Add(lblDurumNokta);
         Controls.Add(lblDurum);
         Controls.Add(lblOlaylar);
@@ -236,6 +255,7 @@ partial class AnaForm
     private Button btnBaslat;
     private Button btnDurdur;
     private Button btnTemizle;
+    private Button btnKaydet;
     private Label lblDurumNokta;
     private Label lblDurum;
     private Label lblOlaylar;
@@ -252,4 +272,5 @@ partial class AnaForm
     private ColumnHeader clmDegistirici;
     private StatusStrip stsDurum;
     private ToolStripStatusLabel lblDurumCubugu;
+    private SaveFileDialog sfdKaydet;
 }
