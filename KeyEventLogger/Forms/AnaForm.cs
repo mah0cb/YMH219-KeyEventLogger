@@ -59,6 +59,7 @@ public partial class AnaForm : Form
         lvKayitlar.Items.Add(oge);
         oge.EnsureVisible();
         KayitSayisiniGoster();
+        IstatistikleriGuncelle();
     }
 
     private void btnBaslat_Click(object? sender, EventArgs e)
@@ -81,6 +82,7 @@ public partial class AnaForm : Form
         txtYazmaAlani.Clear();
         lvKayitlar.Items.Clear();
         KayitSayisiniGoster();
+        IstatistikleriGuncelle();
         YazmaAlaninaOdaklan();
     }
 
@@ -149,4 +151,15 @@ public partial class AnaForm : Form
 
     private void KayitSayisiniGoster() =>
         lblDurumCubugu.Text = $"Toplam kayıt: {_logger.Records.Count}";
+
+    private void IstatistikleriGuncelle()
+    {
+        var istatistik = new TusIstatistikleri(_logger.Records);
+        lblToplamTus.Text = $"Toplam tuş sayısı: {istatistik.ToplamTus}";
+        lstEnSikTuslar.Items.Clear();
+        foreach ((string tusAdi, int adet) in istatistik.EnSikTuslar)
+        {
+            lstEnSikTuslar.Items.Add($"{lstEnSikTuslar.Items.Count + 1}. {tusAdi}: {adet}");
+        }
+    }
 }

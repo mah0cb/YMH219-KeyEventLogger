@@ -28,15 +28,20 @@ partial class AnaForm
         lblYazmaAlani = new Label();
         txtYazmaAlani = new TextBox();
         lvKayitlar = new ListView();
+        grpIstatistik = new GroupBox();
         clmZaman = new ColumnHeader();
         clmOlay = new ColumnHeader();
         clmTus = new ColumnHeader();
         clmKeyCode = new ColumnHeader();
         clmDegistirici = new ColumnHeader();
+        lblToplamTus = new Label();
+        lblEnSik = new Label();
+        lstEnSikTuslar = new ListBox();
         stsDurum = new StatusStrip();
         lblDurumCubugu = new ToolStripStatusLabel();
         sfdKaydet = new SaveFileDialog();
         stsDurum.SuspendLayout();
+        grpIstatistik.SuspendLayout();
         SuspendLayout();
         // 
         // btnBaslat
@@ -175,6 +180,45 @@ partial class AnaForm
         lvKayitlar.UseCompatibleStateImageBehavior = false;
         lvKayitlar.View = View.Details;
         // 
+        // grpIstatistik
+        // 
+        grpIstatistik.Controls.Add(lblToplamTus);
+        grpIstatistik.Controls.Add(lblEnSik);
+        grpIstatistik.Controls.Add(lstEnSikTuslar);
+        grpIstatistik.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        grpIstatistik.Location = new Point(736, 210);
+        grpIstatistik.Name = "grpIstatistik";
+        grpIstatistik.Size = new Size(216, 180);
+        grpIstatistik.TabIndex = 19;
+        grpIstatistik.TabStop = false;
+        grpIstatistik.Text = "İstatistik (KeyDown)";
+        // 
+        // lblToplamTus
+        // 
+        lblToplamTus.AutoSize = true;
+        lblToplamTus.Location = new Point(12, 26);
+        lblToplamTus.Name = "lblToplamTus";
+        lblToplamTus.TabIndex = 0;
+        lblToplamTus.Text = "Toplam tuş sayısı: 0";
+        // 
+        // lblEnSik
+        // 
+        lblEnSik.AutoSize = true;
+        lblEnSik.Location = new Point(12, 50);
+        lblEnSik.Name = "lblEnSik";
+        lblEnSik.TabIndex = 1;
+        lblEnSik.Text = "En sık 5 tuş:";
+        // 
+        // lstEnSikTuslar
+        // 
+        lstEnSikTuslar.FormattingEnabled = true;
+        lstEnSikTuslar.ItemHeight = 15;
+        lstEnSikTuslar.Location = new Point(12, 70);
+        lstEnSikTuslar.Name = "lstEnSikTuslar";
+        lstEnSikTuslar.Size = new Size(192, 94);
+        lstEnSikTuslar.TabIndex = 2;
+        lstEnSikTuslar.TabStop = false;
+        // 
         // clmZaman
         // 
         clmZaman.Text = "Zaman";
@@ -237,6 +281,7 @@ partial class AnaForm
         Controls.Add(lblYazmaAlani);
         Controls.Add(txtYazmaAlani);
         Controls.Add(lvKayitlar);
+        Controls.Add(grpIstatistik);
         Controls.Add(stsDurum);
         KeyPreview = true;
         MinimumSize = new Size(940, 500);
@@ -246,6 +291,8 @@ partial class AnaForm
         KeyDown += AnaForm_KeyDown;
         KeyPress += AnaForm_KeyPress;
         KeyUp += AnaForm_KeyUp;
+        grpIstatistik.ResumeLayout(false);
+        grpIstatistik.PerformLayout();
         stsDurum.ResumeLayout(false);
         stsDurum.PerformLayout();
         ResumeLayout(false);
@@ -265,11 +312,15 @@ partial class AnaForm
     private Label lblYazmaAlani;
     private TextBox txtYazmaAlani;
     private ListView lvKayitlar;
+    private GroupBox grpIstatistik;
     private ColumnHeader clmZaman;
     private ColumnHeader clmOlay;
     private ColumnHeader clmTus;
     private ColumnHeader clmKeyCode;
     private ColumnHeader clmDegistirici;
+    private Label lblToplamTus;
+    private Label lblEnSik;
+    private ListBox lstEnSikTuslar;
     private StatusStrip stsDurum;
     private ToolStripStatusLabel lblDurumCubugu;
     private SaveFileDialog sfdKaydet;
