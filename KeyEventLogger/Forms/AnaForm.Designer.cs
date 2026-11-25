@@ -27,6 +27,12 @@ partial class AnaForm
         chkKeyPress = new CheckBox();
         lblYazmaAlani = new Label();
         txtYazmaAlani = new TextBox();
+        lblBaslangic = new Label();
+        dtpBaslangic = new DateTimePicker();
+        lblBitis = new Label();
+        dtpBitis = new DateTimePicker();
+        btnFiltrele = new Button();
+        btnFiltreTemizle = new Button();
         lvKayitlar = new ListView();
         grpIstatistik = new GroupBox();
         clmZaman = new ColumnHeader();
@@ -167,6 +173,60 @@ partial class AnaForm
         txtYazmaAlani.Size = new Size(940, 60);
         txtYazmaAlani.TabIndex = 11;
         // 
+        // lblBaslangic
+        // 
+        lblBaslangic.AutoSize = true;
+        lblBaslangic.Location = new Point(12, 184);
+        lblBaslangic.Name = "lblBaslangic";
+        lblBaslangic.TabIndex = 12;
+        lblBaslangic.Text = "Başlangıç:";
+        // 
+        // dtpBaslangic
+        // 
+        dtpBaslangic.CustomFormat = "dd.MM.yyyy HH:mm:ss";
+        dtpBaslangic.Format = DateTimePickerFormat.Custom;
+        dtpBaslangic.Location = new Point(80, 180);
+        dtpBaslangic.Name = "dtpBaslangic";
+        dtpBaslangic.Size = new Size(160, 23);
+        dtpBaslangic.TabIndex = 13;
+        // 
+        // lblBitis
+        // 
+        lblBitis.AutoSize = true;
+        lblBitis.Location = new Point(252, 184);
+        lblBitis.Name = "lblBitis";
+        lblBitis.TabIndex = 14;
+        lblBitis.Text = "Bitiş:";
+        // 
+        // dtpBitis
+        // 
+        dtpBitis.CustomFormat = "dd.MM.yyyy HH:mm:ss";
+        dtpBitis.Format = DateTimePickerFormat.Custom;
+        dtpBitis.Location = new Point(292, 180);
+        dtpBitis.Name = "dtpBitis";
+        dtpBitis.Size = new Size(160, 23);
+        dtpBitis.TabIndex = 15;
+        // 
+        // btnFiltrele
+        // 
+        btnFiltrele.Location = new Point(464, 176);
+        btnFiltrele.Name = "btnFiltrele";
+        btnFiltrele.Size = new Size(90, 30);
+        btnFiltrele.TabIndex = 16;
+        btnFiltrele.Text = "Filtrele";
+        btnFiltrele.UseVisualStyleBackColor = true;
+        btnFiltrele.Click += btnFiltrele_Click;
+        // 
+        // btnFiltreTemizle
+        // 
+        btnFiltreTemizle.Location = new Point(560, 176);
+        btnFiltreTemizle.Name = "btnFiltreTemizle";
+        btnFiltreTemizle.Size = new Size(120, 30);
+        btnFiltreTemizle.TabIndex = 17;
+        btnFiltreTemizle.Text = "Filtreyi kaldır";
+        btnFiltreTemizle.UseVisualStyleBackColor = true;
+        btnFiltreTemizle.Click += btnFiltreTemizle_Click;
+        // 
         // lvKayitlar
         // 
         lvKayitlar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -280,6 +340,12 @@ partial class AnaForm
         Controls.Add(chkKeyPress);
         Controls.Add(lblYazmaAlani);
         Controls.Add(txtYazmaAlani);
+        Controls.Add(lblBaslangic);
+        Controls.Add(dtpBaslangic);
+        Controls.Add(lblBitis);
+        Controls.Add(dtpBitis);
+        Controls.Add(btnFiltrele);
+        Controls.Add(btnFiltreTemizle);
         Controls.Add(lvKayitlar);
         Controls.Add(grpIstatistik);
         Controls.Add(stsDurum);
@@ -311,6 +377,12 @@ partial class AnaForm
     private CheckBox chkKeyPress;
     private Label lblYazmaAlani;
     private TextBox txtYazmaAlani;
+    private Label lblBaslangic;
+    private DateTimePicker dtpBaslangic;
+    private Label lblBitis;
+    private DateTimePicker dtpBitis;
+    private Button btnFiltrele;
+    private Button btnFiltreTemizle;
     private ListView lvKayitlar;
     private GroupBox grpIstatistik;
     private ColumnHeader clmZaman;

@@ -8,10 +8,13 @@ public partial class AnaForm : Form
 {
     private readonly KeyEventLoggerService _logger = new();
     private readonly LogFileWriter _dosyaYazici = new();
+    private KayitFiltresi? _filtre;
 
     public AnaForm()
     {
         InitializeComponent();
+        dtpBaslangic.Value = DateTime.Today;
+        dtpBitis.Value = DateTime.Today.AddDays(1).AddSeconds(-1);
         _logger.RecordAdded += Logger_RecordAdded;
         DurumuGuncelle();
         ActiveControl = txtYazmaAlani;
@@ -55,9 +58,12 @@ public partial class AnaForm : Form
 
     private void Logger_RecordAdded(object? sender, KeyEventRecord kayit)
     {
-        ListViewItem oge = OgeOlustur(kayit);
-        lvKayitlar.Items.Add(oge);
-        oge.EnsureVisible();
+        if (_filtre is null || _filtre.Uygun(kayit))
+        {
+            ListViewItem oge = OgeOlustur(kayit);
+            lvKayitlar.Items.Add(oge);
+            oge.EnsureVisible();
+        }
         KayitSayisiniGoster();
         IstatistikleriGuncelle();
     }
@@ -88,7 +94,7 @@ public partial class AnaForm : Form
 
     private void btnKaydet_Click(object? sender, EventArgs e)
     {
-        IReadOnlyList<KeyEventRecord> kayitlar = _logger.Records;
+        IReadOnlyList<KeyEventRecord> kayitlar = GorunenKayitlar();
         if (kayitlar.Count == 0)
         {
             MessageBox.Show(this, "Kaydedilecek kayıt yok.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -116,6 +122,28 @@ public partial class AnaForm : Form
         }
     }
 
+    private void btnFiltrele_Click(object? sender, EventArgs e)
+    {
+        if (dtpBaslangic.Value > dtpBitis.Value)
+        {
+            MessageBox.Show(this, "Başlangıç zamanı bitiş zamanından sonra olamaz.", "Geçersiz aralık",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        else
+        {
+            _filtre = new KayitFiltresi(dtpBaslangic.Value, dtpBitis.Value);
+            ListeyiYenile();
+        }
+        YazmaAlaninaOdaklan();
+    }
+
+    private void btnFiltreTemizle_Click(object? sender, EventArgs e)
+    {
+        _filtre = null;
+        ListeyiYenile();
+        YazmaAlaninaOdaklan();
+    }
+
     private void OlaySecimi_Click(object? sender, EventArgs e) => YazmaAlaninaOdaklan();
 
     /// <summary>Space/Enter bir butonu tetiklemesin diye odağı yazma alanına verir.</summary>
@@ -140,6 +168,19 @@ public partial class AnaForm : Form
         KayitSayisiniGoster();
     }
 
+    /// <summary>Filtre varsa filtrelenmiş, yoksa tüm kayıtları verir.</summary>
+    private IReadOnlyList<KeyEventRecord> GorunenKayitlar() =>
+        _filtre is null ? _logger.Records : _filtre.Uygula(_logger.Records);
+
+    private void ListeyiYenile()
+    {
+        lvKayitlar.BeginUpdate();
+        lvKayitlar.Items.Clear();
+        lvKayitlar.Items.AddRange(GorunenKayitlar().Select(OgeOlustur).ToArray());
+        lvKayitlar.EndUpdate();
+        KayitSayisiniGoster();
+    }
+
     private static ListViewItem OgeOlustur(KeyEventRecord kayit) => new(new[]
     {
         kayit.ZamanMetni,
@@ -150,7 +191,8 @@ public partial class AnaForm : Form
     });
 
     private void KayitSayisiniGoster() =>
-        lblDurumCubugu.Text = $"Toplam kayıt: {_logger.Records.Count}";
+        lblDurumCubugu.Text = $"Görüntülenen: {lvKayitlar.Items.Count} / Toplam kayıt: {_logger.Records.Count}"
+            + (_filtre is null ? "" : " (filtre açık)");
 
     private void IstatistikleriGuncelle()
     {
